@@ -16,6 +16,9 @@ public class EmailService {
     @org.springframework.beans.factory.annotation.Value("${app.frontend.url:}")
     private String frontendUrl;
 
+    @org.springframework.beans.factory.annotation.Value("${spring.mail.from:}")
+    private String fromEmail;
+
     public void sendPasswordResetEmail(String toEmail, String resetToken) {
         String resetUrl = frontendUrl + "/reset-password?token=" + resetToken;
 
@@ -31,6 +34,9 @@ public class EmailService {
             try {
                 log.info("Attempting to send password reset email to {} via Gmail SMTP...", toEmail);
                 SimpleMailMessage message = new SimpleMailMessage();
+                if (fromEmail != null && !fromEmail.isEmpty()) {
+                    message.setFrom(fromEmail);
+                }
                 message.setTo(toEmail);
                 message.setSubject("PrepForge Password Reset");
                 message.setText(
