@@ -174,82 +174,87 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void seedTests() {
-        if (testRepository.count() == 0) {
-            // Test 1: Java Basics MCQ
-            Test t1 = Test.builder()
-                    .title("Java Core Assessment")
-                    .durationMinutes(15)
-                    .category("Technical")
-                    .build();
-            testRepository.save(t1);
+        // Test 1: Java Core Assessment (Technical)
+        Test t1 = saveTestIfNotExist("Java Core Assessment", 15, "Technical");
+        saveQuestionMcq(t1, "Which of the following is NOT a concept of Object Oriented Programming?", 
+            "Encapsulation", "Inheritance", "Compilation", "Polymorphism", "C", 1);
+        saveQuestionMcq(t1, "What is the memory size of a double primitive type in Java?", 
+            "4 bytes", "8 bytes", "16 bytes", "Depends on OS", "B", 1);
+        saveQuestionMcq(t1, "Which class in Java is the root of the class hierarchy?", 
+            "String", "System", "Object", "Class", "C", 1);
 
-            QuestionMcq q1_1 = QuestionMcq.builder()
-                    .test(t1)
-                    .questionText("Which of the following is NOT a concept of Object Oriented Programming?")
-                    .optionA("Encapsulation")
-                    .optionB("Inheritance")
-                    .optionC("Compilation")
-                    .optionD("Polymorphism")
-                    .correctOption("C")
-                    .marks(1)
-                    .build();
-            questionMcqRepository.save(q1_1);
+        // Test 2: Aptitude Test (Aptitude)
+        Test t2 = saveTestIfNotExist("Quantitative Aptitude Basics", 10, "Aptitude");
+        saveQuestionMcq(t2, "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?", 
+            "120 meters", "150 meters", "180 meters", "324 meters", "B", 1);
+        saveQuestionMcq(t2, "What is the average of first five prime numbers?", 
+            "5.0", "5.6", "6.2", "6.8", "B", 1);
 
-            QuestionMcq q1_2 = QuestionMcq.builder()
-                    .test(t1)
-                    .questionText("What is the memory size of a double primitive type in Java?")
-                    .optionA("4 bytes")
-                    .optionB("8 bytes")
-                    .optionC("16 bytes")
-                    .optionD("Depends on OS")
-                    .correctOption("B")
-                    .marks(1)
-                    .build();
-            questionMcqRepository.save(q1_2);
+        // Test 3: Advanced Java & Spring Framework (Technical)
+        Test t3 = saveTestIfNotExist("Java Advanced & Spring Boot", 15, "Technical");
+        saveQuestionMcq(t3, "Which annotation in Spring Boot is used to auto-configure beans based on the classpath libraries?", 
+            "@SpringBootApplication", "@EnableAutoConfiguration", "@Component", "@Configuration", "B", 1);
+        saveQuestionMcq(t3, "What is the primary purpose of the @Transactional annotation in Spring?", 
+            "To spin up a new parallel thread", "To manage database transaction boundaries automatically", "To secure a REST controller endpoint", "To cache query results in Redis", "B", 1);
+        saveQuestionMcq(t3, "Which Hibernate annotation represents a relation where many instances of an entity map to one instance of another?", 
+            "@OneToMany", "@ManyToOne", "@ManyToMany", "@OneToOne", "B", 1);
+        saveQuestionMcq(t3, "In Spring Boot, which interface is used to read properties/profile variables programmatically?", 
+            "Environment", "SystemProperties", "ApplicationContext", "BeanFactory", "A", 1);
+        saveQuestionMcq(t3, "What is the primary difference between BeanFactory and ApplicationContext in Spring?", 
+            "BeanFactory is eager loaded, ApplicationContext is lazy loaded", "ApplicationContext is a sub-interface of BeanFactory adding enterprise features", "BeanFactory supports annotations, ApplicationContext only supports XML config", "There is no difference between them", "B", 1);
 
-            QuestionMcq q1_3 = QuestionMcq.builder()
-                    .test(t1)
-                    .questionText("Which class in Java is the root of the class hierarchy?")
-                    .optionA("String")
-                    .optionB("System")
-                    .optionC("Object")
-                    .optionD("Class")
-                    .correctOption("C")
-                    .marks(1)
-                    .build();
-            questionMcqRepository.save(q1_3);
+        // Test 4: Database Management Systems (Technical)
+        Test t4 = saveTestIfNotExist("Database Management Systems (DBMS)", 15, "Technical");
+        saveQuestionMcq(t4, "Which SQL join returns all rows from the left table, and the matched rows from the right table?", 
+            "INNER JOIN", "RIGHT JOIN", "LEFT JOIN", "FULL OUTER JOIN", "C", 1);
+        saveQuestionMcq(t4, "What does the ACID property 'I' (Isolation) guarantee in database transactions?", 
+            "Transactions are executed fully or not at all", "Committed transactions are permanently saved", "Concurrent transactions leave the database in the same state as sequential ones", "The database state is always structurally valid", "C", 1);
+        saveQuestionMcq(t4, "Which normal form focuses on removing transitive functional dependencies?", 
+            "1NF", "2NF", "3NF", "BCNF", "C", 1);
+        saveQuestionMcq(t4, "What is the primary difference between a Primary Key and a Unique Key in SQL?", 
+            "Primary Key cannot be null; Unique Key allows one null value", "Primary Key allows multiple nulls", "There is no functional difference", "Unique Key cannot be referenced as a Foreign Key", "A", 1);
+        saveQuestionMcq(t4, "Which index type is best suited for executing SQL range queries (e.g. BETWEEN)?", 
+            "Hash Index", "B-Tree Index", "Bitmap Index", "Spatial Index", "B", 1);
 
-            // Test 2: Aptitude Test
-            Test t2 = Test.builder()
-                    .title("Quantitative Aptitude Basics")
-                    .durationMinutes(10)
-                    .category("Aptitude")
-                    .build();
-            testRepository.save(t2);
+        // Test 5: Operating Systems Basics (Technical)
+        Test t5 = saveTestIfNotExist("Operating Systems Basics", 15, "Technical");
+        saveQuestionMcq(t5, "What is a deadlock in Operating Systems?", 
+            "A state where a process completes successfully", "A state where processes are blocked because they hold resources and wait for others", "A system-wide hardware failure", "A memory leak that crashes the OS", "B", 1);
+        saveQuestionMcq(t5, "Which scheduling algorithm is non-preemptive and selects the process with the shortest execution time?", 
+            "Round Robin", "Shortest Job First (SJF)", "Priority Scheduling", "First-Come First-Served", "B", 1);
+        saveQuestionMcq(t5, "What is Virtual Memory in modern Operating Systems?", 
+            "Physical RAM installed on the motherboard", "A technique enabling execution of processes larger than physical memory by swapping to disk", "L1 Cache memory inside the CPU", "Cloud-based virtualized memory spaces", "B", 1);
+        saveQuestionMcq(t5, "What is the main difference between a Process and a Thread?", 
+            "Processes share memory space; threads do not", "A thread is a lightweight execution unit sharing memory within its parent process", "Threads are slower than processes", "Operating systems can only execute processes directly", "B", 1);
+        saveQuestionMcq(t5, "What is 'thrashing' in memory management?", 
+            "Clearing system cache memory", "A state where the system spends more time swapping pages than executing actual instructions", "Deleting unused junk files from disk", "Overclocking the system processor", "B", 1);
+    }
 
-            QuestionMcq q2_1 = QuestionMcq.builder()
-                    .test(t2)
-                    .questionText("A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?")
-                    .optionA("120 meters")
-                    .optionB("150 meters")
-                    .optionC("180 meters")
-                    .optionD("324 meters")
-                    .correctOption("B")
-                    .marks(1)
+    private Test saveTestIfNotExist(String title, int duration, String category) {
+        if (!testRepository.existsByTitle(title)) {
+            Test t = Test.builder()
+                    .title(title)
+                    .durationMinutes(duration)
+                    .category(category)
                     .build();
-            questionMcqRepository.save(q2_1);
+            return testRepository.save(t);
+        }
+        return null;
+    }
 
-            QuestionMcq q2_2 = QuestionMcq.builder()
-                    .test(t2)
-                    .questionText("What is the average of first five prime numbers?")
-                    .optionA("5.0")
-                    .optionB("5.6")
-                    .optionC("6.2")
-                    .optionD("6.8")
-                    .correctOption("B")
-                    .marks(1)
+    private void saveQuestionMcq(Test test, String questionText, String a, String b, String c, String d, String correct, int marks) {
+        if (test != null) {
+            QuestionMcq q = QuestionMcq.builder()
+                    .test(test)
+                    .questionText(questionText)
+                    .optionA(a)
+                    .optionB(b)
+                    .optionC(c)
+                    .optionD(d)
+                    .correctOption(correct)
+                    .marks(marks)
                     .build();
-            questionMcqRepository.save(q2_2);
+            questionMcqRepository.save(q);
         }
     }
 
